@@ -1,35 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import io from "socket.io-client"; 
+import { useEffect } from "react";
+const socket = io.connect("http://localhost:3001");
 
-function App() {
-  const [count, setCount] = useState(0)
+const sendMessage = ()=>{
+socket.emit("send_message",{ message:"hello" })
+}
+
+ export default function App() {
+     useEffect(()=>{
+     socket.on("receive_message",(data)=>{
+     alert(data.message)
+     })
+     },[])
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+   <div className="max-w-7xl mx-auto p-24 flex justify-between gap-8">
+    <input placeholder="Message..." className="px-4 py-4 w-full outline-none border border-gray-500 rounded-md"/>
+    <button onClick={sendMessage} className="rounded-full p-4 bg-green-600">send the message</button>
+   </div>
   )
 }
 
-export default App
+
