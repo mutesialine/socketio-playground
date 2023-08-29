@@ -26,7 +26,8 @@ export default function App() {
         <input
           placeholder="Message..."
           className="px-4 py-4 w-full outline-none border border-gray-500 rounded-md"
-          onChange={(event) => setMessage(event.target.value)}
+          value={message}
+          onChange={event => setMessage(event.target.value)}
         />
         <button onClick={sendMessage} className="rounded-full p-4 bg-green-600">
           send
