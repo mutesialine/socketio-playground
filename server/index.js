@@ -49,7 +49,12 @@ let users=[]
         })
     }
    })
-   
+
+   socket.on("disonnect", ()=>{
+    users=users.filter(u=>u.id !== socket.id)
+    io.emit("new users",users)
+   })
+
     socket.on('join server' ,username=>{
         const user ={
             username,
